@@ -1,11 +1,8 @@
 package concerrox.minecraft.effecticularity.core.utils
 
-import concerrox.minecraft.effecticularity.core.Effecticularity
 import concerrox.minecraft.effecticularity.core.EffecticularityConfiguration
 import concerrox.minecraft.effecticularity.core.registry.ModParticles
 import net.minecraft.core.BlockPos
-import net.minecraft.core.particles.SimpleParticleType
-import net.minecraft.world.entity.animal.allay.Allay
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.biome.Biomes
 import net.minecraft.world.phys.Vec3

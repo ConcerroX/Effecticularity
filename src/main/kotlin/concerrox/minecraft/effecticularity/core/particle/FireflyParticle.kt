@@ -31,7 +31,6 @@ open class FireflyParticle(
     protected var xTarget: Double = 0.0
     protected var yTarget: Double = 0.0
     protected var zTarget: Double = 0.0
-    protected var targetChangeCooldown: Int = 0
     protected var maxHeight: Int
     private var lightTarget: BlockPos? = null
 
@@ -79,7 +78,7 @@ open class FireflyParticle(
             selectBlockTarget()
         }
 
-        var targetVector: Vec3 = Vec3(this.xTarget - this.x, this.yTarget - this.y, this.zTarget - this.z)
+        var targetVector = Vec3(this.xTarget - this.x, this.yTarget - this.y, this.zTarget - this.z)
         val length = targetVector.length()
         targetVector = targetVector.scale(0.1 / length)
 
