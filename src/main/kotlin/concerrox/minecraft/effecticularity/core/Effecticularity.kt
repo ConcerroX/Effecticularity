@@ -14,7 +14,7 @@ import thedarkcolour.kotlinforforge.forge.MOD_BUS
 object Effecticularity {
 
     const val ID = "effecticularity"
-    val LOGGER: Logger = LogManager.getLogger(ID)
+    private val LOGGER: Logger = LogManager.getLogger(ID)
 
     init {
         ModParticles.REGISTRY.register(MOD_BUS)

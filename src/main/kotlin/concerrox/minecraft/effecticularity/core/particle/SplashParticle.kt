@@ -27,6 +27,8 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.Mth
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.phys.Vec3
+import net.minecraftforge.api.distmarker.Dist
+import net.minecraftforge.api.distmarker.OnlyIn
 import org.joml.Vector3f
 
 open class SplashParticle protected constructor(world: ClientLevel, x: Double, y: Double, z: Double) :
@@ -85,18 +87,10 @@ open class SplashParticle protected constructor(world: ClientLevel, x: Double, y
         val g = (waterColor shr 8 and 0xFF).toFloat() / 255.0f
         val b = (waterColor and 0xFF).toFloat() / 255.0f
 
-        val texture: ResourceLocation = Effecticularity.id(
-            ("textures/entity/splash/splash_" + Mth.clamp(
-                frame, 0, MAX_FRAME
-            )).toString() + ".png"
-        )
-        val layer: RenderType = RenderType.entityTranslucent(texture)
-        val rimTexture: ResourceLocation = Effecticularity.id(
-            ("textures/entity/splash/splash_rim_" + Mth.clamp(
-                frame, 0, MAX_FRAME
-            )).toString() + ".png"
-        )
-        val rimLayer: RenderType = RenderType.entityTranslucent(rimTexture)
+        val texture = Effecticularity.id(("textures/entity/splash/splash_" + Mth.clamp(frame, 0, MAX_FRAME)) + ".png")
+        val layer = RenderType.entityTranslucent(texture)
+        val rimTexture = Effecticularity.id(("textures/entity/splash/splash_rim_" + Mth.clamp(frame, 0, MAX_FRAME)) + ".png")
+        val rimLayer = RenderType.entityTranslucent(rimTexture)
 
         // splash matrices
         val modelMatrix: PoseStack = getMatrixStackFromCamera(camera, tickDelta)
@@ -200,8 +194,8 @@ open class SplashParticle protected constructor(world: ClientLevel, x: Double, y
         }
     }
 
-    //    @Environment(EnvType.CLIENT)
-    class DefaultFactory(spriteProvider: SpriteSet) : ParticleProvider<SimpleParticleType> {
+    @OnlyIn(Dist.CLIENT)
+    class DefaultFactory(spriteSet: SpriteSet) : ParticleProvider<SimpleParticleType> {
         override fun createParticle(
             p0: SimpleParticleType,
             level: ClientLevel,

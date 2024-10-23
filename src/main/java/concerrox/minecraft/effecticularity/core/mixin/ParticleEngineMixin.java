@@ -5,12 +5,10 @@ import com.llamalad7.mixinextras.sugar.Local;
 import concerrox.minecraft.effecticularity.core.particle.EffecticularityParticleEngine;
 import concerrox.minecraft.effecticularity.core.registry.ModParticles;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
@@ -18,8 +16,6 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Map;
 
@@ -52,16 +48,16 @@ public class ParticleEngineMixin implements EffecticularityParticleEngine {
         providers.put(type.getId(), registration.create(spriteSet));
     }
 
-//    @Nullable
-//    @ModifyExpressionValue(method = "makeParticle", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/Registry;getKey(Ljava/lang/Object;)Lnet/minecraft/resources/ResourceLocation;"))
-//    private <T extends ParticleOptions> ResourceLocation remapParticles(@Nullable ResourceLocation original, @Local(ordinal = 0, argsOnly = true) T options) {
-//        var registry = ModParticles.INSTANCE.getREGISTRY_CLIENT().get();
-//        if (registry != null && original == null) {
-//            return registry.getKey(options.getType());
-//        } else {
-//            return original;
-//        }
-//    }
+    @Nullable
+    @ModifyExpressionValue(method = "makeParticle", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/Registry;getKey(Ljava/lang/Object;)Lnet/minecraft/resources/ResourceLocation;"))
+    private <T extends ParticleOptions> ResourceLocation remapParticles(@Nullable ResourceLocation original, @Local(ordinal = 0, argsOnly = true) T options) {
+        var registry = ModParticles.INSTANCE.getREGISTRY_CLIENT().get();
+        if (registry != null && original == null) {
+            return registry.getKey(options.getType());
+        } else {
+            return original;
+        }
+    }
 
 //    @Inject(method = "makeParticle", at = @At("RETURN"))
 //    @SuppressWarnings("deprecation")

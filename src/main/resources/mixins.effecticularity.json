@@ -3,13 +3,8 @@
   "package": "concerrox.minecraft.effecticularity.core.mixin",
   "compatibilityLevel": "JAVA_8",
   "refmap": "effecticularity.refmap.json",
-  "mixins": [
-  ],
   "client": [
-    "ParticleEngineMixin",
-    "ParticleSpawningClientWorldMixin",
-    "water.EntitySplashMixin",
-    "water.RippleAndFlowingWaterSplashesSpawner"
+    "ParticleEngineMixin"
   ],
   "minVersion": "0.8"
 }
