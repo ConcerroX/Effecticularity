@@ -17,7 +17,7 @@ public abstract class EntitySplashMixin {
 
     @Inject(method = "doWaterSplashEffect", at = @At("TAIL"))
     protected void onSwimmingStart(CallbackInfo callbackInfo) {
-        if (level.isClientSide && EffecticularityConfiguration.getCONFIG().getSplashes().get()) {
+        if (level.isClientSide && EffecticularityConfiguration.splashes.get()) {
             SplashSpawner.trySpawnSplash((Entity) (Object) this);
         }
     }

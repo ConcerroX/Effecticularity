@@ -37,7 +37,7 @@ object EffectiveUtils {
     }
 
     fun isGlowingWater(world: Level, pos: BlockPos): Boolean {
-        return EffecticularityConfiguration.CONFIG.glowingPlankton.get() && isNightTime(world) && world.getBiome(pos)
+        return EffecticularityConfiguration.glowingPlankton.get() && isNightTime(world) && world.getBiome(pos)
             .`is`(Biomes.WARM_OCEAN)
     }
 

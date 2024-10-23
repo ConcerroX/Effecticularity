@@ -47,22 +47,18 @@ public class RippleAndFlowingWaterSplashesSpawner {
     @Inject(method = "animateTick", at = @At("HEAD"))
     protected void effective$splashAndRainRipples(Level p_230606_, BlockPos p_230607_, FluidState p_230608_, RandomSource p_230609_, CallbackInfo ci) {
         // flowing water splashes
-        var world = p_230606_;
-        var pos = p_230607_;
-        var state = p_230608_;
-        var random = p_230609_;
-        if (effecticularity_1_20_1$shouldSplash(world, pos.above())) {
-            Vec3 vec3d = state.getFlow(world, pos);
-            for (int i = 0; i <= random.nextInt(EffecticularityConfiguration.getCONFIG().getFlowingWaterSplashingDensity().get()); i++) {
-                world.addParticle(ParticleTypes.SPLASH, pos.getX() + .5 + random.nextGaussian() / 2f, pos.getY() + 1 + random.nextFloat(), pos.getZ() + .5 + random.nextGaussian() / 2f, vec3d.x * random.nextFloat(), random.nextFloat() / 10f, vec3d.z * random.nextFloat());
+        if (effecticularity_1_20_1$shouldSplash(p_230606_, p_230607_.above())) {
+            Vec3 vec3d = p_230608_.getFlow(p_230606_, p_230607_);
+            for (int i = 0; i <= p_230609_.nextInt(EffecticularityConfiguration.getCONFIG().getFlowingWaterSplashingDensity().get()); i++) {
+                p_230606_.addParticle(ParticleTypes.SPLASH, p_230607_.getX() + .5 + p_230609_.nextGaussian() / 2f, p_230607_.getY() + 1 + p_230609_.nextFloat(), p_230607_.getZ() + .5 + p_230609_.nextGaussian() / 2f, vec3d.x * p_230609_.nextFloat(), p_230609_.nextFloat() / 10f, vec3d.z * p_230609_.nextFloat());
             }
         }
 
         // still water rain ripples
-        if (effecticularity_1_20_1$shouldRipple(world, pos)) {
-            if (random.nextInt(10) <= EffecticularityConfiguration.getCONFIG().getRainRippleDensity().get()) {
-                if (world.getBiome(pos).value().getPrecipitationAt(pos) == Biome.Precipitation.RAIN && world.canSeeSkyFromBelowWater(pos)) {
-                    EffectiveUtils.spawnWaterEffect(world, Vec3.atCenterOf(pos).add(random.nextFloat() - random.nextFloat(), .39f, random.nextFloat() - random.nextFloat()), 0f, 0f, 0f, EffectiveUtils.WaterEffectType.RIPPLE);
+        if (effecticularity_1_20_1$shouldRipple(p_230606_, p_230607_)) {
+            if (p_230609_.nextInt(10) <= EffecticularityConfiguration.getCONFIG().getRainRippleDensity().get()) {
+                if (p_230606_.getBiome(p_230607_).value().getPrecipitationAt(p_230607_) == Biome.Precipitation.RAIN && p_230606_.canSeeSkyFromBelowWater(p_230607_)) {
+                    EffectiveUtils.spawnWaterEffect(p_230606_, Vec3.atCenterOf(p_230607_).add(p_230609_.nextFloat() - p_230609_.nextFloat(), .39f, p_230609_.nextFloat() - p_230609_.nextFloat()), 0f, 0f, 0f, EffectiveUtils.WaterEffectType.RIPPLE);
                 }
             }
         }

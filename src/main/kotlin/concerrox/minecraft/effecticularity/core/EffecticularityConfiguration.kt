@@ -9,6 +9,29 @@ class EffecticularityConfiguration(builder: ForgeConfigSpec.Builder) {
         @JvmStatic
         var CONFIG_SPEC: ForgeConfigSpec
 
+        @JvmStatic
+        lateinit var splashes: ForgeConfigSpec.BooleanValue
+        @JvmStatic
+        lateinit var splashThreshold: ForgeConfigSpec.DoubleValue
+        @JvmStatic
+        lateinit var flowingWaterSplashingDensity: ForgeConfigSpec.IntValue
+        @JvmStatic
+        lateinit var cascades: ForgeConfigSpec.BooleanValue
+        @JvmStatic
+        lateinit var cascadeCloudDensity: ForgeConfigSpec.DoubleValue
+        @JvmStatic
+        lateinit var cascadeMistDensity: ForgeConfigSpec.IntValue
+        @JvmStatic
+        lateinit var shouldFlowingWaterSpawnParticlesOnFirstTick: ForgeConfigSpec.BooleanValue
+        @JvmStatic
+        lateinit var lapisBlockUpdateParticleChance: ForgeConfigSpec.IntValue
+        @JvmStatic
+        lateinit var rainRippleDensity: ForgeConfigSpec.IntValue
+        @JvmStatic
+        lateinit var glowingPlankton: ForgeConfigSpec.BooleanValue
+        @JvmStatic
+        lateinit var underwaterOpenChestBubbles: ForgeConfigSpec.BooleanValue
+
         init {
             val configured = ForgeConfigSpec.Builder().configure(::EffecticularityConfiguration)
             CONFIG = configured.left
@@ -16,17 +39,7 @@ class EffecticularityConfiguration(builder: ForgeConfigSpec.Builder) {
         }
     }
 
-    var splashes: ForgeConfigSpec.BooleanValue
-    var splashThreshold: ForgeConfigSpec.DoubleValue
-    var flowingWaterSplashingDensity: ForgeConfigSpec.IntValue
-    var cascades: ForgeConfigSpec.BooleanValue
-    var cascadeCloudDensity: ForgeConfigSpec.DoubleValue
-    var cascadeMistDensity: ForgeConfigSpec.IntValue
-    var shouldFlowingWaterSpawnParticlesOnFirstTick: ForgeConfigSpec.BooleanValue
-    var lapisBlockUpdateParticleChance: ForgeConfigSpec.IntValue
-    var rainRippleDensity: ForgeConfigSpec.IntValue
-    var glowingPlankton: ForgeConfigSpec.BooleanValue
-    var underwaterOpenChestBubbles: ForgeConfigSpec.BooleanValue
+
 //    var underwaterChestsOpenRandomly: ForgeConfigSpec.IntValue
 
     var fireflyDensity: ForgeConfigSpec.DoubleValue

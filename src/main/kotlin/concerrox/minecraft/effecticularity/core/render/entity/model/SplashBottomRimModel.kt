@@ -10,11 +10,10 @@ import net.minecraft.client.model.geom.PartPose
 import net.minecraft.client.model.geom.builders.CubeListBuilder
 import net.minecraft.client.model.geom.builders.LayerDefinition
 import net.minecraft.client.model.geom.builders.MeshDefinition
-import net.minecraft.client.model.geom.builders.PartDefinition
 import net.minecraft.world.entity.Entity
 
-class SplashBottomRimModel<T : Entity?>(root: ModelPart) : EntityModel<T>() {
-    private val splash: ModelPart = root.getChild("splash_rim")
+class SplashBottomRimModel<T : Entity>(root: ModelPart) : EntityModel<T>() {
+    private val splash = root.getChild("splash_rim")
 
     override fun renderToBuffer(
         matrices: PoseStack,
@@ -30,29 +29,25 @@ class SplashBottomRimModel<T : Entity?>(root: ModelPart) : EntityModel<T>() {
     }
 
     override fun setupAnim(
-        entity: T,
-        limbAngle: Float,
-        limbDistance: Float,
-        animationProgress: Float,
-        headYaw: Float,
-        headPitch: Float
+        entity: T, limbAngle: Float, limbDistance: Float, animationProgress: Float, headYaw: Float, headPitch: Float
     ) {
     }
 
     companion object {
-        val MODEL_LAYER: ModelLayerLocation = ModelLayerLocation(Effecticularity.id("splash_bottom_rim"), "main")
+        val MODEL_LAYER = ModelLayerLocation(Effecticularity.id("splash_bottom_rim"), "main")
+
         @JvmStatic
         fun createBodyLayer(): LayerDefinition {
-                val modelData = MeshDefinition()
-                val modelPartData: PartDefinition = modelData.root
+            val modelData = MeshDefinition()
+            val modelPartData = modelData.root
 
-                modelPartData.addOrReplaceChild(
-                    "splash_rim",
-                    CubeListBuilder.create().texOffs(0, 0).addBox(-6.0f, 0.0f, -6.0f, 12.0f, 0.0f, 12.0f),
-                    PartPose.offset(0.0f, 0.0f, 0.0f)
-                )
+            modelPartData.addOrReplaceChild(
+                "splash_rim",
+                CubeListBuilder.create().texOffs(0, 0).addBox(-6.0f, 0.0f, -6.0f, 12.0f, 0.0f, 12.0f),
+                PartPose.offset(0.0f, 0.0f, 0.0f)
+            )
 
-                return LayerDefinition.create(modelData, 48, 28)
-            }
+            return LayerDefinition.create(modelData, 48, 28)
+        }
     }
 }
