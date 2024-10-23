@@ -26,37 +26,29 @@ object Effecticularity {
     val LOGGER: Logger = LogManager.getLogger(ID)
 
     init {
-        LOGGER.log(Level.INFO, "Hello world!")
-
         ModParticles.REGISTRY.register(MOD_BUS)
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, EffecticularityConfiguration.CONFIG_SPEC)
 
-        runForDist(
-            clientTarget = {
-                MOD_BUS.addListener(Effecticularity::onClientSetup)
-                Minecraft.getInstance()
-            },
-            serverTarget = {
-                MOD_BUS.addListener(Effecticularity::onServerSetup)
-                "test"
-            })
+//        runForDist(
+//            clientTarget = {
+//                MOD_BUS.addListener(Effecticularity::onClientSetup)
+//            },
+//            serverTarget = {
+//                MOD_BUS.addListener(Effecticularity::onServerSetup)
+//            })
     }
 
     fun id(identifier: String): ResourceLocation {
         return ResourceLocation(ID, identifier)
     }
 
-    private fun onClientSetup(event: FMLClientSetupEvent) {
-        Satin.INSTANCE.onClientSetup(event)
-    }
-
-    private fun onServerSetup(event: FMLDedicatedServerSetupEvent) {
-
-    }
-
-    fun isNightTime(world: net.minecraft.world.level.Level): Boolean {
-        return world.getSunAngle(world.dayTime.toFloat()) in 0.25965086..0.7403491
-    }
+//    private fun onClientSetup(event: FMLClientSetupEvent) {
+//        Satin.INSTANCE.onClientSetup(event)
+//    }
+//
+//    private fun onServerSetup(event: FMLDedicatedServerSetupEvent) {
+//
+//    }
 
     @JvmStatic
     fun cout(string: String) {

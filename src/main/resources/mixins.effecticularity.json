@@ -4,10 +4,12 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "effecticularity.refmap.json",
   "mixins": [
-    "water.EntitySplashMixin"
   ],
   "client": [
-    "ParticleSpawningClientWorldMixin"
+    "ParticleEngineMixin",
+    "ParticleSpawningClientWorldMixin",
+    "water.EntitySplashMixin",
+    "water.RippleAndFlowingWaterSplashesSpawner"
   ],
   "minVersion": "0.8"
 }

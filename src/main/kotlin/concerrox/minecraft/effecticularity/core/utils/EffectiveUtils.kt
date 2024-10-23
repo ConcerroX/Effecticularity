@@ -1,6 +1,7 @@
 package concerrox.minecraft.effecticularity.core.utils
 
 import concerrox.minecraft.effecticularity.core.Effecticularity
+import concerrox.minecraft.effecticularity.core.EffecticularityConfiguration
 import concerrox.minecraft.effecticularity.core.registry.ModParticles
 import net.minecraft.core.BlockPos
 import net.minecraft.core.particles.SimpleParticleType
@@ -10,49 +11,41 @@ import net.minecraft.world.level.biome.Biomes
 import net.minecraft.world.phys.Vec3
 
 object EffectiveUtils {
-    fun isGoingFast(allayEntity: Allay): Boolean {
-        val velocity: Vec3 = allayEntity.deltaMovement
-        val speedRequired = 0.1f
+//    fun isGoingFast(allayEntity: Allay): Boolean {
+//        val velocity: Vec3 = allayEntity.deltaMovement
+//        val speedRequired = 0.1f
+//
+//        return ((velocity.x() >= speedRequired || velocity.x() <= -speedRequired)
+//                || (velocity.y() >= speedRequired || velocity.y() <= -speedRequired)
+//                || (velocity.z() >= speedRequired || velocity.z() <= -speedRequired))
+//    }
 
-        return ((velocity.x() >= speedRequired || velocity.x() <= -speedRequired)
-                || (velocity.y() >= speedRequired || velocity.y() <= -speedRequired)
-                || (velocity.z() >= speedRequired || velocity.z() <= -speedRequired))
-    }
-
-    /**
-     * chooses between spawning a normal droplet / ripple / waterfall cloud or glow one depending on biome
-     */
+    @JvmStatic
     fun spawnWaterEffect(
-        world: Level,
-        pos: Vec3,
-        velocityX: Double,
-        velocityY: Double,
-        velocityZ: Double,
-        waterEffect: WaterEffectType?
+        world: Level, pos: Vec3, velocityX: Double, velocityY: Double, velocityZ: Double, waterEffect: WaterEffectType
     ) {
-        var particle: SimpleParticleType = when (waterEffect) {
+        val particle = if (isGlowingWater(world, pos)) when (waterEffect) {
             WaterEffectType.DROPLET -> ModParticles.DROPLET.get()
-            WaterEffectType.RIPPLE -> ModParticles.DROPLET.get()//Effective.RIPPLE
-            null -> TODO()
-        }
-        if (isGlowingWater(world, pos)) {
-            particle = when (waterEffect) {
-                WaterEffectType.DROPLET -> ModParticles.DROPLET.get()//Effective.GLOW_DROPLET
-                WaterEffectType.RIPPLE -> ModParticles.DROPLET.get()//Effective.GLOW_RIPPLE
-                null -> TODO()
-            }
+            WaterEffectType.RIPPLE -> ModParticles.RIPPLE.get()
+        } else when (waterEffect) {
+            WaterEffectType.DROPLET -> ModParticles.DROPLET.get()//Effective.GLOW_DROPLET
+            WaterEffectType.RIPPLE -> ModParticles.RIPPLE.get()//Effective.GLOW_RIPPLE
         }
 
         world.addParticle(particle, pos.x(), pos.y(), pos.z(), velocityX, velocityY, velocityZ)
     }
 
-    fun isGlowingWater(world: Level, pos: Vec3): Boolean {
+    private fun isGlowingWater(world: Level, pos: Vec3): Boolean {
         return isGlowingWater(world, BlockPos.containing(pos))
     }
 
     fun isGlowingWater(world: Level, pos: BlockPos): Boolean {
-        return true && Effecticularity.isNightTime(world) && world.getBiome(pos) //EffectiveConfig.glowingPlankton && Effective.isNightTime(world) && world.getBiome(pos)
+        return EffecticularityConfiguration.CONFIG.glowingPlankton.get() && isNightTime(world) && world.getBiome(pos)
             .`is`(Biomes.WARM_OCEAN)
+    }
+
+    fun isNightTime(world: Level): Boolean {
+        return world.getSunAngle(world.dayTime.toFloat()) in 0.25965086..0.7403491
     }
 //
 //    fun getGlowingWaterColor(world: Level, pos: BlockPos): Color {
@@ -88,7 +81,6 @@ object EffectiveUtils {
 //    }
 
     enum class WaterEffectType {
-        DROPLET,
-        RIPPLE,
+        DROPLET, RIPPLE,
     }
 }

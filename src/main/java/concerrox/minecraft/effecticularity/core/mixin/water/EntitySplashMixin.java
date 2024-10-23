@@ -1,6 +1,6 @@
 package concerrox.minecraft.effecticularity.core.mixin.water;
 
-import concerrox.minecraft.effecticularity.core.Effecticularity;
+import concerrox.minecraft.effecticularity.core.EffecticularityConfiguration;
 import concerrox.minecraft.effecticularity.core.world.SplashSpawner;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -17,7 +17,7 @@ public abstract class EntitySplashMixin {
 
     @Inject(method = "doWaterSplashEffect", at = @At("TAIL"))
     protected void onSwimmingStart(CallbackInfo callbackInfo) {
-        if (this.level.isClientSide && true) { //EffectiveConfig.splashes) {
+        if (level.isClientSide && EffecticularityConfiguration.getCONFIG().getSplashes().get()) {
             SplashSpawner.trySpawnSplash((Entity) (Object) this);
         }
     }

@@ -2,7 +2,6 @@ package concerrox.minecraft.effecticularity.core.mixin;
 
 import concerrox.minecraft.effecticularity.core.EffecticularityConfiguration;
 import concerrox.minecraft.effecticularity.core.particle.FireflyParticle;
-import concerrox.minecraft.effecticularity.core.particle.types.FireflyParticleType;
 import concerrox.minecraft.effecticularity.core.registry.ModParticles;
 import concerrox.minecraft.effecticularity.core.settings.FireflySpawnSetting;
 import concerrox.minecraft.effecticularity.core.settings.SpawnSettings;
@@ -12,8 +11,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleType;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -32,8 +29,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import team.lodestar.lodestone.handlers.RenderHandler;
-import team.lodestar.lodestone.registry.common.particle.LodestoneParticleRegistry;
 import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder;
 import team.lodestar.lodestone.systems.particle.data.GenericParticleData;
 import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData;
@@ -63,10 +58,10 @@ public abstract class ParticleSpawningClientWorldMixin extends Level {
         Holder<Biome> biome = this.getBiome(pos);
 
         // FIREFLIES
-        if (EffecticularityConfiguration.getCONFIG().fireflyDensity.get() > 0) {
+        if (EffecticularityConfiguration.getCONFIG().getFireflyDensity().get() > 0) {
             FireflySpawnSetting fireflySpawnSetting = SpawnSettings.getFIREFLIES().get(biome.unwrapKey().get());
             if (fireflySpawnSetting != null) {
-                if (random.nextFloat() * 250f <= fireflySpawnSetting.spawnChance() * EffecticularityConfiguration.getCONFIG().fireflyDensity.get() && pos.getY() > this.getSeaLevel()) {
+                if (random.nextFloat() * 250f <= fireflySpawnSetting.spawnChance() * EffecticularityConfiguration.getCONFIG().getFireflyDensity().get() && pos.getY() > this.getSeaLevel()) {
                     for (int y = this.getSeaLevel(); y <= this.getSeaLevel() * 2; y++) {
                         pos.setY(y);
                         pos2.setY(y - 1);
@@ -88,16 +83,6 @@ public abstract class ParticleSpawningClientWorldMixin extends Level {
 //                                }
 //                            }, pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
                             WorldParticleBuilder.create(ModParticles.INSTANCE.getFIREFLY().get())
-//                                    .setScaleData(GenericParticleData.create(12f).build())
-//                                    .setTransparencyData(GenericParticleData.create(1.0f, 1f).build())
-//                                    .setColorData(ColorParticleData.create(fireflySpawnSetting.color(), fireflySpawnSetting.color()).build())
-////                                    .setSpinData(SpinParticleData.create(0.2f,0.4f).setSpinOffset((level.getGameTime() * 0.2f) % 6.28f).setEasing(Easing.QUARTIC_IN).build())
-//                                    .setLifetime(1000)
-////                                    .addMotion(0,0.5,0)
-////                                    .setRandomMotion(MAGNITUDE, MAGNITUDE)
-//                                    .enableNoClip()
-//                                    .setGravity(2.0F)
-
                                     .enableForcedSpawn()
                                     .setColorData(ColorParticleData.create(fireflySpawnSetting.color(), fireflySpawnSetting.color()).build())
                                     .setScaleData(GenericParticleData.create(0.05f + random.nextFloat() * 0.10f).build())

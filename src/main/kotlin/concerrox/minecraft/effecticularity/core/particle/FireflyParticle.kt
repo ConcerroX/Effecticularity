@@ -1,7 +1,6 @@
 package concerrox.minecraft.effecticularity.core.particle
 
-import concerrox.minecraft.effecticularity.core.Effecticularity
-import concerrox.minecraft.effecticularity.core.Effecticularity.cout
+import concerrox.minecraft.effecticularity.core.utils.EffectiveUtils
 import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.client.particle.ParticleEngine
 import net.minecraft.core.BlockPos
@@ -50,7 +49,7 @@ open class FireflyParticle(
         this.zo = this.z
 
         // fade and die on daytime or if old enough unless fireflies can spawn any time of day
-        if ((!level.dimensionType().hasFixedTime() && !Effecticularity.isNightTime(level)) || age++ >= this.lifetime) {
+        if ((!level.dimensionType().hasFixedTime() && !EffectiveUtils.isNightTime(level)) || age++ >= this.lifetime) {
             nextAlphaGoal = 0f
             if (this.alpha <= 0.01f) {
                 this.remove()
